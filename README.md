@@ -17,8 +17,8 @@ of the aws-xray-sdk-ruby gem.
 ### Deployment
 
 * run `./build.sh` to build the zip file containing the function and bundled gems.
-* run `aws cloudformation package --template-file sam_template.yaml --s3-bucket $BUCKET_NAME > cf.yaml`, replacing $BUCKET_NAME with the name of a bucket you have access to.
-* run `aws cloudformation deploy --template-file cf.yaml --stack-name 'aws-lambda-ruby-xray-demo' --capability CAPABILITY_IAM` to deploy the stack containing the function.
+* run `aws cloudformation package --template-file sam_template.yaml --s3-bucket $BUCKET_NAME --output-template-file cf.yaml`, replacing $BUCKET_NAME with the name of a bucket you have access to.
+* run `aws cloudformation deploy --template-file cf.yaml --stack-name 'aws-lambda-ruby-xray-demo' --capabilities CAPABILITY_IAM` to deploy the stack containing the function.
 
 ### Test
 
