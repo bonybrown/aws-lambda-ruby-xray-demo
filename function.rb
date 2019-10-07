@@ -18,7 +18,19 @@ def dynamo_client
 end
 
 def handler(event:,context:)
-  puts dynamo_client.list_tables
+
+  # Test begin_segment - should report warning, but not create segment
+  XRay.recorder.begin_segment 'my_segment'
+  puts "in segment - begin_segment call should have logged a warning"
+  # Test end_segment - should report warning
+  XRay.recorder.end_segment
+
+  # Test begin_subsegment, should result in subsegment created
+  XRay.recorder.begin_subsegment 'sub-segment'
+  puts "in subsegment"
+  dynamo_client.list_tables
   uri = URI 'https://ip-ranges.amazonaws.com/ip-ranges.json'
-  puts http_connection.request(uri).body
+  http_connection.request(uri).body
+  XRay.recorder.end_subsegment
+
 end
